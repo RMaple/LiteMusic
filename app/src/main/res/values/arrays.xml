@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tab_titles">
+        <item name="local">本地</item>
+        <item name="cloud">云</item>
+        <item name="friends">朋友</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?actionBarSize"
+    android:background="@color/lite_red"
+    android:baselineAligned="false"
+    android:orientation="vertical">
+
+    <!--<Toolbar-->
+    <!--android:id="@+id/toolbar"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="?actionBarSize"-->
+    <!--android:layout_gravity="center_horizontal">-->
+
+    <!--<ImageButton-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:background="@null"-->
+    <!--android:src="@mipmap/ic_launcher_round" />-->
+
+    <!--<ImageButton-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:background="@null"-->
+    <!--android:src="@mipmap/ic_launcher_round" />-->
+
+    <!--<ImageButton-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@null"-->
+    <!--android:src="@mipmap/ic_launcher_round" />-->
+    <!--</Toolbar>-->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:background="@mipmap/setting"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitCenter" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_titles"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right" />
+
+    </android.support.design.widget.TabLayout>
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:background="@mipmap/search"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="fitCenter" />
+</RelativeLayout>
