@@ -9,9 +9,7 @@ import java.util.List;
 
 /**
  * <br/>Author: pecuyu
- * <br/>Email: yu.qin@ck-telecom.com
  * <br/>Date: 2017/12/28
- * <br/>TODO:
  */
 
 public class MainPageAdapter extends FragmentPagerAdapter {

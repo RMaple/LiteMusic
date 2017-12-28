@@ -11,9 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.pecuyu.litemusic.adapters.MainPageAdapter;
-import com.pecuyu.litemusic.fragments.CloudMusicFragment;
+import com.pecuyu.litemusic.fragments.DiscoverFragment;
 import com.pecuyu.litemusic.fragments.FriendsFragment;
-import com.pecuyu.litemusic.fragments.LocalMusicFragment;
+import com.pecuyu.litemusic.fragments.MusicFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
     @NonNull
     private List<Fragment> getFragments() {
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(new LocalMusicFragment());
-        fragmentList.add(new CloudMusicFragment());
+        fragmentList.add(new MusicFragment());
+        fragmentList.add(new DiscoverFragment());
         fragmentList.add(new FriendsFragment());
         return fragmentList;
     }

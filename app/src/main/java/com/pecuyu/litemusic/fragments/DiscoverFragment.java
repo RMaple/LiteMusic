@@ -12,10 +12,10 @@ import com.pecuyu.litemusic.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LocalMusicFragment extends Fragment {
+public class DiscoverFragment extends Fragment {
 
 
-    public LocalMusicFragment() {
+    public DiscoverFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class LocalMusicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_local_music, container, false);
+        return inflater.inflate(R.layout.fragment_cloud_music, container, false);
     }
 
 }
