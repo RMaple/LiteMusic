@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ItemViewWithIcon">
+        <attr name="item_icon" format="integer|reference"/>
+        <attr name="item_text" format="string|reference"/>
+        <attr name="item_text_detail" format="string|reference"/>
+
+    </declare-styleable>
+</resources>
