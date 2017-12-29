@@ -6,9 +6,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.pecuyu.litemusic.adapters.MainPageAdapter;
 import com.pecuyu.litemusic.fragments.DiscoverFragment;
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolBar = (Toolbar) findViewById(R.id.id_title);
+        setSupportActionBar(toolBar);
+        setTitle("");
         mTabs = (TabLayout) findViewById(R.id.tab_titles);
         ViewPager pager = (ViewPager) findViewById(R.id.main_view_pager);
         List<Fragment> fragmentList = getFragments();
@@ -76,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupTitleIcons(int selected) {
-        Log.e(TAG, "selected:" + selected);
         ImageView imageView;
         for (int i = 0; i < mTitleNormalIcons.length; i++) {
             TabLayout.Tab tab = mTabs.getTabAt(i);
@@ -84,25 +89,45 @@ public class MainActivity extends AppCompatActivity {
             if (i == selected) {
                 if (customView == null) {
                     imageView = new ImageView(MainActivity.this);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     imageView.setImageResource(mTitleSelectedIcons[i]);
                     tab.setCustomView(imageView);
                 } else {
                     ((ImageView) customView).setImageResource(mTitleSelectedIcons[i]);
                 }
-                //                tab.setIcon(mTitleSelectedIcons[i]);
+                  //tab.setIcon(mTitleSelectedIcons[i]);
 
             } else {
                 if (customView == null) {
                     imageView = new ImageView(MainActivity.this);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     imageView.setImageResource(mTitleNormalIcons[i]);
                     tab.setCustomView(imageView);
                 } else {
                     ((ImageView) customView).setImageResource(mTitleNormalIcons[i]);
                 }
-//                tab.setIcon(mTitleNormalIcons[i]);
+                //tab.setIcon(mTitleNormalIcons[i]);
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_tool_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.id_search:
+                Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_SHORT).show();
+                break;
+            case android.R.id.home:
+                Toast.makeText(getApplicationContext(), "settings", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

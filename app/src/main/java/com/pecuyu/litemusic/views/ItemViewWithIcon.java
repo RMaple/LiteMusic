@@ -1,9 +1,9 @@
 package com.pecuyu.litemusic.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +16,6 @@ import com.pecuyu.litemusic.R;
 
 public class ItemViewWithIcon extends LinearLayout {
 
-    private View mRoot;
     private ImageView mIcon;
     private TextView mName;
     private TextView mDetail;
@@ -32,51 +31,62 @@ public class ItemViewWithIcon extends LinearLayout {
 
     public ItemViewWithIcon(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mRoot = LayoutInflater.from(context).inflate(R.layout.item_layout_style, this);
-        int item_icon = attrs.getAttributeResourceValue(R.styleable.ItemViewWithIcon_item_icon, R.mipmap.ic_launcher);
-        String item_text = attrs.getAttributeValue(R.styleable.ItemViewWithIcon_item_text);
-        String item_text_detail = attrs.getAttributeValue(R.styleable.ItemViewWithIcon_item_text_detail);
 
-        mIcon = (ImageView) mRoot.findViewById(R.id.item_icon);
-        mName = (TextView) mRoot.findViewById(R.id.item_name);
-        mDetail = (TextView) mRoot.findViewById(R.id.item_detail);
+//        int item_icon = attrs.getAttributeResourceValue(R.styleable.ItemViewWithIcon_item_icon, R.mipmap.ic_launcher);
+//        String item_text = attrs.getAttributeValue(R.styleable.ItemViewWithIcon_item_text);
+//        String item_text_detail = attrs.getAttributeValue(R.styleable.ItemViewWithIcon_item_text_detail);
+
+        setup(context, attrs);
+    }
+
+    private void setup(Context context, AttributeSet attrs) {
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ItemViewWithIcon);
+        int item_icon = ta.getResourceId(R.styleable.ItemViewWithIcon_item_icon, R.mipmap.ic_launcher);
+        String item_text = ta.getString(R.styleable.ItemViewWithIcon_item_text);
+        String item_text_detail = ta.getString(R.styleable.ItemViewWithIcon_item_text_detail);
+        ta.recycle();
+
+        LayoutInflater.from(context).inflate(R.layout.item_layout_style, this, true);
+        mIcon = (ImageView) findViewById(R.id.item_icon);
+        mName = (TextView) findViewById(R.id.item_name);
+        mDetail = (TextView) findViewById(R.id.item_detail);
 
         mIcon.setImageResource(item_icon);
         mName.setText(item_text);
         mDetail.setText(item_text_detail);
+
+        setClickable(true);
     }
 
-
-    public View getmRoot() {
-        return mRoot;
-    }
-
-    public ImageView getmIcon() {
+    public ImageView getIcon() {
         return mIcon;
     }
 
-    public TextView getmName() {
+    public TextView getName() {
         return mName;
     }
 
-    public TextView getmDetail() {
+    public TextView getDetail() {
         return mDetail;
     }
 
-    public void setmIcon(ImageView mIcon) {
+    public void setIcon(ImageView mIcon) {
         this.mIcon = mIcon;
     }
 
-    public void setmName(TextView mName) {
+    public void setName(TextView mName) {
         this.mName = mName;
     }
 
-    public void setmDetail(TextView mDetail) {
+    public void setDetail(TextView mDetail) {
         this.mDetail = mDetail;
     }
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    public void setItemOnClickListener(OnClickListener listener) {
+        setOnClickListener(listener);
+    }
 
+    public void setOnItemLongClickListener(OnLongClickListener listener) {
+        setOnLongClickListener(listener);
     }
 }
