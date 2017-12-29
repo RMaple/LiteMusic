@@ -6,4 +6,5 @@
 
     <color name="lite_red">#eeff0000</color>
     <color name="lighter_gray">#ddd</color>
+    <color name="light_gray">#addd</color>
 </resources>
