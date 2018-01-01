@@ -6,21 +6,21 @@ import android.widget.RelativeLayout;
 
 /**
  * <br/>Author: pecuyu
- * <br/>Email: yu.qin@ck-telecom.com
  * <br/>Date: 2017/12/29
- * <br/>TODO:
+ * <br/>TODO:用于折叠的itemview
  */
 
 public class CollapseItemView extends RelativeLayout {
     public CollapseItemView(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public CollapseItemView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public CollapseItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
     }
 }

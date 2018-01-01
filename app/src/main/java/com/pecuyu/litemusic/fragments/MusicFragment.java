@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pecuyu.litemusic.R;
@@ -30,38 +31,48 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Col
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_music, container, false);
         musicColumn = (CollapseItemViewContainer) view.findViewById(R.id.id_music_column);
-//        TextView child = new TextView(getActivity());
-//        child.setText("test");
-//        musicColumn.addView(child);
-//
-//        child = new TextView(getActivity());
-//        child.setText("test2");
-//        musicColumn.addView(child);
-//
-//        child = new TextView(getActivity());
-//        child.setText("test3");
-//        musicColumn.addView(child);
-        musicColumn.setOnClickListener(this);
-        musicColumn.setOnContainerCollapseChangeListener(this);
+        TextView child = new TextView(getActivity());
+        child.setText("test");
+        musicColumn.addItemView(child);
 
+
+        child = new TextView(getActivity());
+        child.setText("test2");
+        musicColumn.addItemView(child);
+
+        child = new TextView(getActivity());
+        child.setText("test3");
+        musicColumn.addItemView(child);
+        musicColumn.setOnCollapseChangeListener(this);
+        musicColumn.setItemManagerClickListener(new ItemManagerClickListener());
         return view;
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(getActivity(), "onClick", Toast.LENGTH_SHORT).show();
         if (v == musicColumn) {
-            musicColumn.switchCollapseState();
+           // Toast.makeText(getActivity(), "onClick", Toast.LENGTH_SHORT).show();
+           // musicColumn.switchCollapseState();
         }
     }
 
-    @Override
-    public void onContainerCollapse(View v) {
 
+    class ItemManagerClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getActivity(), "manager onClick", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    public void onItemViewCollapse(ViewGroup parent) {
+        Toast.makeText(getActivity(), "onItemViewCollapse", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onContainerShow(View v) {
-
+    public void onItemViewShow(ViewGroup parent) {
+        Toast.makeText(getActivity(), "onItemViewShow", Toast.LENGTH_SHORT).show();
     }
 }
