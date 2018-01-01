@@ -60,7 +60,7 @@ public class CollapseItemViewContainer extends LinearLayout implements View.OnCl
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CollapseItemViewContainer);
         mIconId = ta.getResourceId(R.styleable.CollapseItemViewContainer_item_title_icon, R.mipmap.item_indicator);
         mTitleNameStr = ta.getString(R.styleable.CollapseItemViewContainer_item_title_name);
-        mCount = ta.getInt(R.styleable.CollapseItemViewContainer_item_detail, 0);
+        mCount = ta.getInt(R.styleable.CollapseItemViewContainer_item_title_detail, 0);
         ta.recycle();
 
         // 初始化布局

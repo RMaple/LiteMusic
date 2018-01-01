@@ -9,6 +9,12 @@
     <declare-styleable name="CollapseItemViewContainer">
         <attr name="item_title_icon" format="integer|reference"/>
         <attr name="item_title_name" format="string|reference"/>
-        <attr name="item_detail" format="string|reference|integer"/>
+        <attr name="item_title_detail" format="string|reference|integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="CollapseItemView">
+        <attr name="collapse_item_icon" format="integer|reference"/>
+        <attr name="collapse_item_name" format="string|reference"/>
+        <attr name="collapse_item_detail" format="string|reference|integer"/>
     </declare-styleable>
 </resources>

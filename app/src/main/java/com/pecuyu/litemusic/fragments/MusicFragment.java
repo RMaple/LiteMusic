@@ -26,13 +26,24 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Col
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_music, container, false);
         musicColumn = (CollapseItemViewContainer) view.findViewById(R.id.id_music_column);
 
-        CollapseItemView itemView = new CollapseItemView(getActivity());
+        final CollapseItemView itemView = new CollapseItemView(getActivity());
+        itemView.setItemIcon(R.mipmap.icon_cd).setItemName("我喜欢的音乐").setItemDetail("60首").setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "itemView onClick "+itemView.getItemName(), Toast.LENGTH_SHORT).show();
+            }
+        }).setOnMoreClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "itemView more onClick", Toast.LENGTH_SHORT).show();
+            }
+        });
         musicColumn.addItemView(itemView);
         musicColumn.setOnCollapseChangeListener(this);
         musicColumn.setItemManagerClickListener(new ItemManagerClickListener());
@@ -42,13 +53,13 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Col
     @Override
     public void onClick(View v) {
         if (v == musicColumn) {
-           // Toast.makeText(getActivity(), "onClick", Toast.LENGTH_SHORT).show();
-           // musicColumn.switchCollapseState();
+            // Toast.makeText(getActivity(), "onClick", Toast.LENGTH_SHORT).show();
+            // musicColumn.switchCollapseState();
         }
     }
 
 
-    class ItemManagerClickListener implements View.OnClickListener{
+    class ItemManagerClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
