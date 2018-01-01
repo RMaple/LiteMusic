@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pecuyu.litemusic.R;
 
@@ -14,11 +16,14 @@ import com.pecuyu.litemusic.R;
  * Created by pecuyu on 2017/12/28.
  */
 
-public class ItemViewWithIcon extends LinearLayout {
+public class ItemViewWithIcon extends LinearLayout implements View.OnClickListener, View.OnLongClickListener {
 
     private ImageView mIcon;
     private TextView mName;
     private TextView mDetail;
+    private OnClickListener mItemClickListener;
+    private OnLongClickListener mItemLongClickListener;
+    private String item_text;
 
     public ItemViewWithIcon(Context context) {
         this(context, null);
@@ -32,17 +37,13 @@ public class ItemViewWithIcon extends LinearLayout {
     public ItemViewWithIcon(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-//        int item_icon = attrs.getAttributeResourceValue(R.styleable.ItemViewWithIcon_item_icon, R.mipmap.ic_launcher);
-//        String item_text = attrs.getAttributeValue(R.styleable.ItemViewWithIcon_item_text);
-//        String item_text_detail = attrs.getAttributeValue(R.styleable.ItemViewWithIcon_item_text_detail);
-
         setup(context, attrs);
     }
 
     private void setup(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ItemViewWithIcon);
         int item_icon = ta.getResourceId(R.styleable.ItemViewWithIcon_item_icon, R.mipmap.ic_launcher);
-        String item_text = ta.getString(R.styleable.ItemViewWithIcon_item_text);
+        item_text = ta.getString(R.styleable.ItemViewWithIcon_item_text);
         String item_text_detail = ta.getString(R.styleable.ItemViewWithIcon_item_text_detail);
         ta.recycle();
 
@@ -56,6 +57,9 @@ public class ItemViewWithIcon extends LinearLayout {
         mDetail.setText(item_text_detail);
 
         setClickable(true);
+
+        setOnClickListener(this);
+        setOnLongClickListener(this);
     }
 
     public ImageView getIcon() {
@@ -82,11 +86,27 @@ public class ItemViewWithIcon extends LinearLayout {
         this.mDetail = mDetail;
     }
 
-    public void setItemOnClickListener(OnClickListener listener) {
-        setOnClickListener(listener);
+    public void setOnItemClickListener(OnClickListener listener) {
+        mItemClickListener = listener;
     }
 
     public void setOnItemLongClickListener(OnLongClickListener listener) {
-        setOnLongClickListener(listener);
+        mItemLongClickListener = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(getContext(), item_text, Toast.LENGTH_SHORT).show();
+        if (v == this && mItemClickListener != null) {
+            mItemClickListener.onClick(v);
+        }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if (v == this && mItemLongClickListener != null) {
+            mItemLongClickListener.onLongClick(v);
+        }
+        return false;
     }
 }
