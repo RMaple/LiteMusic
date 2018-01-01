@@ -5,6 +5,7 @@
               android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/item_container_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_gray"
@@ -23,7 +24,7 @@
             android:src="@mipmap/item_indicator"/>
 
         <TextView
-            android:id="@+id/tv_item_name"
+            android:id="@+id/tv_item_title_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -37,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tv_item_name"
+            android:layout_toRightOf="@id/tv_item_title_name"
             android:text="(6)"/>
 
         <ImageView
@@ -55,7 +56,9 @@
         android:id="@+id/ll_item_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp">
 
 
     </LinearLayout>

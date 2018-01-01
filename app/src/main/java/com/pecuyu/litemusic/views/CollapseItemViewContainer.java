@@ -1,9 +1,9 @@
 package com.pecuyu.litemusic.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pecuyu.litemusic.R;
@@ -26,15 +28,22 @@ import com.pecuyu.litemusic.adapters.OnGestureListenerAdapter;
 
 public class CollapseItemViewContainer extends LinearLayout implements View.OnClickListener {
 
-    private LinearLayout mItemContainer;
+    private LinearLayout mItemViewContainer;
     private boolean isCollapsed = false;
-    private GestureDetector mGestureDetector;
     private ImageView mItemIndicator;
     private ImageView mItemManager;
 
     private ContainerCollapseChangeListener mCollapseChangeListener;
-    private OnClickListener mItemClickListener;
+    private OnClickListener mItemTitleClickListener;
     private Context mContext;
+    private RelativeLayout mTitleContainer;
+    private OnClickListener mItemManagerClickListener;
+    private int mIconId;
+    private String mTitleNameStr;
+    private int mCount;
+    private ImageView mIvIndicator;
+    private TextView mTvTitleName;
+    private TextView mTvCount;
 
     public CollapseItemViewContainer(Context context) {
         this(context, null);
@@ -47,27 +56,46 @@ public class CollapseItemViewContainer extends LinearLayout implements View.OnCl
     public CollapseItemViewContainer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
+        // 获取属性值
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CollapseItemViewContainer);
+        mIconId = ta.getResourceId(R.styleable.CollapseItemViewContainer_item_title_icon, R.mipmap.item_indicator);
+        mTitleNameStr = ta.getString(R.styleable.CollapseItemViewContainer_item_title_name);
+        mCount = ta.getInt(R.styleable.CollapseItemViewContainer_item_detail, 0);
+        ta.recycle();
+
+        // 初始化布局
         View root = LayoutInflater.from(context).inflate(R.layout.item_collapse_view_container, this, true);
-        root.setOnClickListener(this);
-        mItemContainer = (LinearLayout) root.findViewById(R.id.ll_item_view_container);
+        mItemViewContainer = (LinearLayout) root.findViewById(R.id.ll_item_view_container);
         mItemIndicator = (ImageView) root.findViewById(R.id.iv_item_indicator);
         mItemManager = (ImageView) root.findViewById(R.id.iv_item_manager);
-        mItemContainer.clearAnimation();
+        mTitleContainer = (RelativeLayout) root.findViewById(R.id.item_container_title);
+        mIvIndicator = (ImageView) mTitleContainer.findViewById(R.id.iv_item_indicator);
+        mTvTitleName = (TextView) mTitleContainer.findViewById(R.id.tv_item_title_name);
+        mTvCount = (TextView) mTitleContainer.findViewById(R.id.tv_item_count);
+
+        mIvIndicator.setImageResource(mIconId);
+        mTvTitleName.setText(mTitleNameStr);
+        mTvCount.setText("(" + mCount + ")");
+
+        // 设置监听
+        mTitleContainer.setOnClickListener(this);
+        mItemManager.setOnClickListener(this);
+
         setClickable(true);
 
-        // 手势识别
-        mGestureDetector = new GestureDetector(context, new ItemGestureListener());
 
         // 默认折叠
         collapseItemViews();
     }
 
     public void addItemView(CollapseItemView itemView) {
-        mItemContainer.addView(itemView);
+        mItemViewContainer.addView(itemView);
+        mTvCount.setText("(" + mItemViewContainer.getChildCount() + ")");
     }
 
     public void addItemView(View itemView) {
-        mItemContainer.addView(itemView);
+        mItemViewContainer.addView(itemView);
+        mTvCount.setText("(" + mItemViewContainer.getChildCount() + ")");
     }
 
     public void switchCollapseState() {
@@ -82,23 +110,24 @@ public class CollapseItemViewContainer extends LinearLayout implements View.OnCl
      * 展开
      */
     private void showItemViews() {
-        mItemContainer.setVisibility(View.VISIBLE);
+        mItemViewContainer.setVisibility(View.VISIBLE);
         isCollapsed = false;
         startItemIndicatorRotationAnimation(0, 90);
 
-        if (mCollapseChangeListener != null) mCollapseChangeListener.onItemViewShow(mItemContainer);
+        if (mCollapseChangeListener != null)
+            mCollapseChangeListener.onItemViewShow(mItemViewContainer);
     }
 
     /**
      * 折叠
      */
     private void collapseItemViews() {
-        mItemContainer.setVisibility(View.GONE);
+        mItemViewContainer.setVisibility(View.GONE);
         isCollapsed = true;
         startItemIndicatorRotationAnimation(90, 0);
 
         if (mCollapseChangeListener != null)
-            mCollapseChangeListener.onItemViewCollapse(mItemContainer);
+            mCollapseChangeListener.onItemViewCollapse(mItemViewContainer);
     }
 
     /**
@@ -123,11 +152,23 @@ public class CollapseItemViewContainer extends LinearLayout implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        if (mItemContainer.getChildCount() == 0) {
-            Toast.makeText(mContext, "当前条目无内容!", Toast.LENGTH_SHORT).show();
-        }
-        if (mItemClickListener != null) {
-            mItemClickListener.onClick(v);
+        switch (v.getId()) {
+            case R.id.item_container_title:
+                if (mItemViewContainer.getChildCount() == 0) {
+                    Toast.makeText(mContext, "当前条目无内容!", Toast.LENGTH_SHORT).show();
+                } else {
+                    switchCollapseState();
+                }
+                if (mItemTitleClickListener != null) {
+                    mItemTitleClickListener.onClick(v);
+                }
+                break;
+
+            case R.id.iv_item_manager:
+                if (mItemManagerClickListener != null) {
+                    mItemManagerClickListener.onClick(v);
+                }
+                break;
         }
     }
 
@@ -143,24 +184,18 @@ public class CollapseItemViewContainer extends LinearLayout implements View.OnCl
     private class ItemGestureListener extends OnGestureListenerAdapter {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            if (mItemContainer.getChildCount() != 0)
+            if (mItemViewContainer.getChildCount() != 0)
                 switchCollapseState();
             return true;
         }
     }
 
     public void setItemManagerClickListener(OnClickListener listener) {
-        mItemManager.setOnClickListener(listener);
+        mItemManagerClickListener = listener;
     }
 
-    public void setOnItemClickListener(OnClickListener listener) {
-        this.mItemClickListener = listener;
+    public void setOnItemTitleClickListener(OnClickListener listener) {
+        this.mItemTitleClickListener = listener;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        mGestureDetector.onTouchEvent(event);
-
-        return super.onTouchEvent(event);
-    }
 }

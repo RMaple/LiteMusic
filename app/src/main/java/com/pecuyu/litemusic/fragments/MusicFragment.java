@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pecuyu.litemusic.R;
+import com.pecuyu.litemusic.views.CollapseItemView;
 import com.pecuyu.litemusic.views.CollapseItemViewContainer;
 
 /**
@@ -31,18 +31,9 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Col
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_music, container, false);
         musicColumn = (CollapseItemViewContainer) view.findViewById(R.id.id_music_column);
-        TextView child = new TextView(getActivity());
-        child.setText("test");
-        musicColumn.addItemView(child);
 
-
-        child = new TextView(getActivity());
-        child.setText("test2");
-        musicColumn.addItemView(child);
-
-        child = new TextView(getActivity());
-        child.setText("test3");
-        musicColumn.addItemView(child);
+        CollapseItemView itemView = new CollapseItemView(getActivity());
+        musicColumn.addItemView(itemView);
         musicColumn.setOnCollapseChangeListener(this);
         musicColumn.setItemManagerClickListener(new ItemManagerClickListener());
         return view;

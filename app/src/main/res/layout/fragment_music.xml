@@ -68,12 +68,14 @@
         <com.pecuyu.litemusic.views.CollapseItemViewContainer
             android:id="@+id/id_music_column"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            yu:item_title_name="创建的歌单"/>
 
         <com.pecuyu.litemusic.views.CollapseItemViewContainer
             android:id="@+id/id_music_favorite"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            yu:item_title_name="收藏的歌单"/>
     </LinearLayout>
 
 
