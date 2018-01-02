@@ -2,6 +2,7 @@ package com.pecuyu.litemusic.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,8 +56,15 @@ public class ItemViewWithIcon extends LinearLayout implements View.OnClickListen
         mIcon.setImageResource(item_icon);
         mName.setText(item_text);
         mDetail.setText(item_text_detail);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AppCompatTheme);
+        Drawable drawable = typedArray.getDrawable(R.styleable.AppCompatTheme_selectableItemBackground);
+        typedArray.recycle();
 
         setClickable(true);
+
+        if (drawable != null) {
+            setForeground(drawable);
+        }
 
         setOnClickListener(this);
         setOnLongClickListener(this);

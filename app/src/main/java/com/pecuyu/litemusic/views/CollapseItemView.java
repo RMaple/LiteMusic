@@ -2,6 +2,7 @@ package com.pecuyu.litemusic.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,12 @@ public class CollapseItemView extends RelativeLayout implements View.OnClickList
         String itemDetail = ta.getString(R.styleable.CollapseItemView_collapse_item_detail);
         ta.recycle();
 
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AppCompatTheme);
+        Drawable drawable = typedArray.getDrawable(R.styleable.AppCompatTheme_selectableItemBackground);
+        typedArray.recycle();
+        if (drawable != null) {
+            setForeground(drawable);
+        }
 
         LayoutInflater.from(context).inflate(R.layout.item_collapse_view, this);
         mIvIcon = (ImageView) findViewById(R.id.iv_item_icon);
