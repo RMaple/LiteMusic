@@ -1,5 +1,7 @@
 package com.pecuyu.litemusic;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -10,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -34,7 +37,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // 透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            //getWindow().setNavigationBarColor(Color.TRANSPARENT);
+        }
+        setContentView(R.layout.main);
         Toolbar toolBar = (Toolbar) findViewById(R.id.id_title);
         setSupportActionBar(toolBar);
         setTitle("");
@@ -95,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     ((ImageView) customView).setImageResource(mTitleSelectedIcons[i]);
                 }
-                  //tab.setIcon(mTitleSelectedIcons[i]);
+                //tab.setIcon(mTitleSelectedIcons[i]);
 
             } else {
                 if (customView == null) {
